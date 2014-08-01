@@ -876,6 +876,13 @@ namespace MobileCRM.Services.DataLayer
             TableName = MappedType.Name;
             // BindingFlags.Public | BindingFlags.Instance | BindingFlags.SetProperty
             var props = MappedType.GetRuntimeProperties();
+            var baseType = type.GetTypeInfo().BaseType;
+            if (baseType != typeof(Object))
+            {
+                List<PropertyInfo> allProps = new List<PropertyInfo>(props);
+                allProps.AddRange(baseType.GetRuntimeProperties());
+                props = allProps;
+            }
             var cols = new List<Column>();
             foreach (var p in props)
             {

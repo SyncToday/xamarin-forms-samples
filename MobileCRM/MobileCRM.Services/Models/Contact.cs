@@ -214,6 +214,18 @@ namespace MobileCRM.Models
         {
             return string.Format ("{0} {1}", FirstName, LastName);
         }
+
+        public int ID
+        {
+            get
+            {
+                return ((DefaultContact)InnerContact).ID;
+            }
+            set
+            {
+                ((DefaultContact)InnerContact).ID = value;
+            }
+        }
     }
 
     public class DefaultContact : IContact, INotifyPropertyChanged
@@ -324,6 +336,8 @@ namespace MobileCRM.Models
             }
         }
         #endregion
+
+        public int ID { get; set; }
     }
 }
 

@@ -11,7 +11,7 @@ using MobileCRM.Models;
 namespace MobileCRM.Services
 {
 
-    public class ContactRepository : InMemoryRepository<Contact> 
+    public class ContactRepository : MobileCRM.Services.Repositories.CRMRepository<Contact, MobileCRM.Services.DTO.Contact> 
     {
         public ContactRepository()
         {

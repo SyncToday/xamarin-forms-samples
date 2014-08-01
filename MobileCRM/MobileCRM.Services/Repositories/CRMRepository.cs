@@ -8,7 +8,9 @@ using System.Threading.Tasks;
 
 namespace MobileCRM.Services.Repositories
 {
-    public class CRMRepository<T> : SQLiteRepository<T> where T : class, MobileCRM.Services.Models.IBusinessEntity, IContact, new()
+    public class CRMRepository<T, U> : SQLiteRepository<T, U> 
+        where T : class, IContact, new()
+        where U : class, MobileCRM.Services.DTO.IBusinessEntity,  MobileCRM.Services.DTO.IConvertable<T, U>,  MobileCRM.Services.DTO.IConvertable<U, T>, new()
     {
         protected override DataLayer.SQLDatabase GetSQLDatabase(string dbLocation)
         {

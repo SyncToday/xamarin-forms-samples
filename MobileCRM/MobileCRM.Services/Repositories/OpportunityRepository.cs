@@ -7,7 +7,7 @@ using MobileCRM.Models;
 namespace MobileCRM.Services
 {
 
-    public class OpportunityRepository : InMemoryRepository<Opportunity> 
+    public class OpportunityRepository : MobileCRM.Services.Repositories.CRMRepository<Opportunity, MobileCRM.Services.DTO.Opportunity> 
     {
         public OpportunityRepository()
         {

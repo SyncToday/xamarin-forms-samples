@@ -1,4 +1,5 @@
-﻿using System;
+﻿using MobileCRM.Services.DTO;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -27,14 +28,14 @@ namespace MobileCRM.Services.DataLayer
 
         public abstract void CreateTables(); //CreateTable<Task> ();
 
-        public IEnumerable<T> GetItems<T>() where T : Models.IBusinessEntity, new()
+        public IEnumerable<T> GetItems<T>() where T : IBusinessEntity, new()
 		{
             lock (locker) {
                 return (from i in Table<T> () select i).ToList ();
             }
 		}
 
-        public T GetItem<T>(int id) where T : Models.IBusinessEntity, new()
+        public T GetItem<T>(int id) where T : IBusinessEntity, new()
 		{
             lock (locker) {
                 return Table<T>().FirstOrDefault(x => x.ID == id);
@@ -45,7 +46,7 @@ namespace MobileCRM.Services.DataLayer
             }
 		}
 
-        public int SaveItem<T>(T item) where T : Models.IBusinessEntity
+        public int SaveItem<T>(T item) where T : IBusinessEntity
 		{
             lock (locker) {
                 if (item.ID != 0) {
@@ -57,7 +58,7 @@ namespace MobileCRM.Services.DataLayer
             }
 		}
 		
-		public int DeleteItem<T>(int id) where T : Models.IBusinessEntity, new ()
+		public int DeleteItem<T>(int id) where T : IBusinessEntity, new ()
 		{
             lock (locker) {
 #if NETFX_CORE

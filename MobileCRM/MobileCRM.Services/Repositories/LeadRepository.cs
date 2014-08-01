@@ -11,7 +11,8 @@ using MobileCRM.Models;
 namespace MobileCRM.Services
 {
 
-    public class LeadRepository : InMemoryRepository<Lead>, IRepository<Lead> 
+    public class LeadRepository : MobileCRM.Services.Repositories.CRMRepository<Lead, MobileCRM.Services.DTO.Lead>, 
+        IRepository<Lead> 
     {
         public LeadRepository()
         {

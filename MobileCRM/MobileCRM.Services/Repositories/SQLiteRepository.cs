@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 
 namespace MobileCRM.Services.Repositories
 {
-    public abstract class SQLiteRepository<T> : IRepository<T> where T : class, MobileCRM.Services.Models.IBusinessEntity, IContact, new()
+    public abstract class SQLiteRepository<TFrontEnd, TDatabase> : IRepository<TFrontEnd>
+        where TFrontEnd : class, IContact, new()
+        where TDatabase : class, MobileCRM.Services.DTO.IBusinessEntity, MobileCRM.Services.DTO.IConvertable<TFrontEnd, TDatabase>, MobileCRM.Services.DTO.IConvertable<TDatabase, TFrontEnd>, new()
     {
         MobileCRM.Services.DataLayer.SQLDatabase db = null;
 		protected static string dbLocation;
@@ -27,41 +29,51 @@ namespace MobileCRM.Services.Repositories
         protected abstract string GetDatabaseFilePath();
 
 
-        public async Task<IEnumerable<T>> All()
+        public async Task<IEnumerable<TFrontEnd>> All()
         {
-            return db.GetItems<T>();
+            return GetAllItems();
         }
 
         // TODO: remove this horrible implementation and replace it with real calls to SQLite
-        protected IList<T> GetAllItems()
+        protected IList<TFrontEnd> GetAllItems()
         {
-            return new List<T>(db.GetItems<T>());
+            var data = db.GetItems<TDatabase>();
+            List<TFrontEnd> result = new List<TFrontEnd>();
+            foreach (var row in data)
+            {
+                result.Add(row.Convert(row));
+            }
+            return result;
         }
 
-        public async Task<IEnumerable<T>> FindAsync(Func<T, bool> predicate)
+        public async Task<IEnumerable<TFrontEnd>> FindAsync(Func<TFrontEnd, bool> predicate)
         {
             return GetAllItems().Where(predicate);
         }
 
-        public async Task<T> Get(Func<T, bool> predicate)
+        public async Task<TFrontEnd> Get(Func<TFrontEnd, bool> predicate)
         {
             return GetAllItems().SingleOrDefault(predicate);
         }
 
-        public async Task<T> Update(T item)
+        public async Task<TFrontEnd> Update(TFrontEnd item)
         {
-            var changedItems = db.SaveItem<T>(item);
-            int id = item.ID;
-            return db.GetItem<T>(id);
+            var dbItem = new TDatabase();
+            dbItem = dbItem.Convert(item);
+            var changedItems = db.SaveItem<TDatabase>(dbItem);
+            int id = dbItem.ID;
+            return db.GetItem<TDatabase>(id) as TFrontEnd;
         }
 
-        public async Task Delete(T item)
+        public async Task Delete(TFrontEnd item)
         {
-            int id = item.ID;
-            db.DeleteItem<T>(id);
+            var dbItem = new TDatabase();
+            dbItem = dbItem.Convert(item);
+            int id = dbItem.ID;
+            db.DeleteItem<TDatabase>(id);
         }
 
-        public async Task<T> Add(T item)
+        public async Task<TFrontEnd> Add(TFrontEnd item)
         {
             return await Update(item);
         }

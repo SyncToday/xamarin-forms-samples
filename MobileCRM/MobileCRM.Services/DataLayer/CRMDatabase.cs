@@ -18,11 +18,11 @@ namespace MobileCRM.Services.DataLayer
 
         public override void CreateTables()
         {
-            //CreateTable<Account>();
-            CreateTable<Contact>();
-            /*CreateTable<Lead>();
-            CreateTable<Opportunity>();
-            CreateTable<User>();*/
+            CreateTable<DTO.Account>();
+            CreateTable<DTO.Contact>();
+            CreateTable<DTO.Lead>();
+            CreateTable<DTO.Opportunity>();
+            /*CreateTable<DTO.User>();*/
         }
     }
 }
