@@ -112,7 +112,9 @@ namespace MobileCRM.Shared.Pages
             //PinMap = dict;
 
             // TODO: Compute a proper bounding box.
-            var map = new Map(MapSpan.FromCenterAndRadius(pins[0].Position, Distance.FromMiles(0.3)))
+            Position position = pins.Count > 0 ? pins[0].Position : new Position(50.0885733, 14.4601000);
+
+            var map = new Map(MapSpan.FromCenterAndRadius(position, Distance.FromMiles(0.3)))
             {
                 IsShowingUser = true
             };

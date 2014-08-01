@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Deployment xmlns="http://schemas.microsoft.com/windowsphone/2012/deployment" AppPlatformVersion="8.0">
   <DefaultLanguage xmlns="" code="en-US" />
-  <App xmlns="" ProductID="{91cd0edb-85f3-4281-b340-1da6977c233b}" Title="MobileCRM.WindowsPhone" RuntimeType="Silverlight" Version="1.0.0.0" Genre="apps.normal" Author="MobileCRM.WindowsPhone author" Description="Sample description" Publisher="MobileCRM.WindowsPhone" PublisherID="{76f5502c-7a66-46db-91b9-9cafe444248b}">
+  <App xmlns="" ProductID="{91cd0edb-85f3-4281-b340-1da6977c233b}" Title="CRM for Sync.Today Mobile" RuntimeType="Silverlight" Version="1.0.0.3" Genre="apps.normal" Author="Gassumo" Description="CRM for is a simple cross-platform CRM application sample that allows you to track lead, accounts, contacts and opportunities and synchronize them using Sync.Today demo server." Publisher="NašeÚkoly.CZ" PublisherID="{76f5502c-7a66-46db-91b9-9cafe444248b}">
     <IconPath IsRelative="true" IsResource="false">Assets\ApplicationIcon.png</IconPath>
     <Capabilities>
       <Capability Name="ID_CAP_NETWORKING" />
